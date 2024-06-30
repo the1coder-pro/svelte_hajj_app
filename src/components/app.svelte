@@ -34,6 +34,7 @@
 		theme: "md", // Automatic theme detection
 		navbar: {
 			mdCenterTitle: true,
+			
 		},
 		darkMode: false,
 

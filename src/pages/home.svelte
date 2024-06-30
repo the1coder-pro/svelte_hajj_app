@@ -70,7 +70,7 @@
 	<!-- Top Navbar -->
 
 	<Navbar>
-		<NavTitle>حج التمتع</NavTitle>
+		<NavTitle style="font-size: 25px; padding: 20px;">حج التمتع</NavTitle>
 	</Navbar>
 
 	<Toolbar topMd tabbar>
@@ -81,11 +81,10 @@
 	<Tabs>
 		<Tab id="tab-1" class="page-content" tabActive>
 			<Block>
-				<h1 style="text-align: center;">المعلمين</h1>
 				<p class="grid grid-cols-2 grid-gap">
 					{#each teachers as teacher}
 						<Button
-							href="/teacher/{teacher.name}"
+							href="/teacher/{teacher.name}/"
 							large
 							outline
 							style="font-size: 15px; text-align: center; color:

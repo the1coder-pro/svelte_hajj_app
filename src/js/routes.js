@@ -5,7 +5,10 @@ import FormPage from "../pages/form.svelte";
 import DynamicRoutePage from "../pages/dynamic-route.svelte";
 import RequestAndLoad from "../pages/request-and-load.svelte";
 import NotFoundPage from "../pages/404.svelte";
-import TeacherPage from "../pages/teacher.svelte";
+import MainTitlePage from "../pages/mainTitles.svelte";
+import SubTitlePage from "../pages/subTitles.svelte";
+import QuestionsPage from "../pages/questions.svelte";
+import QuestionPage from "../pages/question.svelte";
 
 var routes = [
 	{
@@ -22,7 +25,19 @@ var routes = [
 	},
 	{
 		path: "/teacher/:name",
-		component: TeacherPage,
+		component: MainTitlePage,
+	},
+	{
+		path: "/teacher/:name/:mainTitle/",
+		component: SubTitlePage,
+	},
+	{
+		path: "/teacher/:name/:mainTitle/:subTitle/",
+		component: QuestionsPage,
+	},
+	{
+		path: "/teacher/:name/:mainTitle/:subTitle/:question/",
+		component: QuestionPage,
 	},
 
 	{
