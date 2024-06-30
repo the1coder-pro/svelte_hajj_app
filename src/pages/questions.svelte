@@ -12,6 +12,8 @@
 		NavRight,
 		Block,
 		NavTitle,
+		Subnavbar,
+		Searchbar,
 	} from "framework7-svelte";
 
 	import data from "./data.json";
@@ -36,17 +38,20 @@
 		<NavRight>
 			<Button color="black" iconF7="arrow_right" back></Button>
 		</NavRight>
+		<Subnavbar inner={false}>
+			<Searchbar searchContainer=".search-list" searchIn=".item-title" />
+		</Subnavbar>
 	</Navbar>
-	<Block>
+
+	<List strongIos outlineIos dividersIos class="searchbar-not-found">
+		<ListItem title="Nothing found" />
+	</List>
+	<List strongIos outlineIos dividersIos class="search-list searchbar-found">
 		{#each questions as question}
-			<Button
+			<ListItem
 				href="/teacher/{name}/{mainTitle}/{subTitle}/{question.Question}/"
-				large
-				outline
-				style="font-size: 15px; text-align: center; color:
-					black;">{question.Question}</Button
-			>
-			<br />
+				title={question.Question}
+			/>
 		{/each}
-	</Block>
+	</List>
 </Page>

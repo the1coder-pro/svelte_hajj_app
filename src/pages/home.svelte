@@ -2,68 +2,42 @@
 	import {
 		Page,
 		Navbar,
-		NavLeft,
 		NavTitle,
-		NavTitleLarge,
 		NavRight,
 		Link,
 		Toolbar,
 		Block,
-		Card,
-		BlockTitle,
 		List,
 		ListItem,
 		Button,
+		Subnavbar,
 		Searchbar,
 		Tabs,
 		Tab,
+		Fab,
+		Icon,
+		Popup,
 	} from "framework7-svelte";
 
 	let teachers = [
-		{
-			id: 1,
-			name: "شيخ علي العبدالكريم",
-			subject: "Math",
-		},
-		{
-			id: 2,
-			name: "شيخ حسين السعيد",
-			subject: "Science",
-		},
-		{
-			id: 3,
-			name: "شيخ حسن المطوع",
-			subject: "English",
-		},
-		{
-			id: 4,
-			name: "شيخ أحمد المطوع",
-			subject: "Arabic",
-		},
-		{
-			id: 5,
-			name: "شيخ عبدالله العبدالله",
-			subject: "History",
-		},
-		{
-			id: 6,
-			name: "سيد زكريا الحاجي",
-			subject: "Geography",
-		},
-		{
-			id: 7,
-			name: "سيد عبدالله الحاجي",
-			subject: "Biology",
-		},
-		{
-			id: 8,
-			name: "شيخ علي الدهنين",
-			subject: "Chemistry",
-		},
+		"شيخ علي العبدالكريم",
+		"شيخ حسين السعيد",
+		"شيخ حسن المطوع",
+		"شيخ أحمد المطوع",
+		"شيخ عبدالله العبدالله",
+		"سيد زكريا الحاجي",
+		"سيد عبدالله الحاجي",
+		"شيخ علي الدهنين",
 	];
 
-	import Form from "./form.svelte";
-	let page;
+	let popupOpened = false;
+
+	// get questions from data.json
+	let questions = [];
+	import data from "./data.json";
+	data.forEach((question) => {
+		questions.push(question);
+	});
 </script>
 
 <Page name="home" pageContent={false}>
@@ -84,16 +58,48 @@
 				<p class="grid grid-cols-2 grid-gap">
 					{#each teachers as teacher}
 						<Button
-							href="/teacher/{teacher.name}/"
+							href="/teacher/{teacher}/"
 							large
 							outline
 							style="font-size: 15px; text-align: center; color:
-							black;">{teacher.name}</Button
+							black;">{teacher}</Button
 						>
 					{/each}
 				</p>
 			</Block>
+			<Fab position="right-bottom" onClick={() => (popupOpened = !popupOpened)}>
+				<Icon md="material:search" />
+			</Fab>
+			<Popup
+				class="demo-popup-swipe"
+				swipeToClose
+				onPopupClosed={() => (popupOpened = false)}
+				opened={popupOpened}
+			>
+				<Page>
+					<Navbar title="البحث">
+						<Searchbar searchContainer=".search-list" searchIn=".item-title" />
+						<NavRight>
+							<Button color="black" iconF7="arrow_right" popupClose></Button>
+						</NavRight>
+					</Navbar>
+					<List strongIos outlineIos dividersIos class="searchbar-not-found">
+						<ListItem title="لا توجد أسئلة بمثل ما كتبت" />
+					</List>
+					<List
+						strongIos
+						outlineIos
+						dividersIos
+						class="search-list searchbar-found"
+					>
+						{#each questions as question}
+							<ListItem dir="rtl" title={question.Question} />
+						{/each}
+					</List>
+				</Page>
+			</Popup>
 		</Tab>
+
 		<Tab id="tab-2" class="page-content">
 			<Block>
 				<p>Tab 2 content</p>

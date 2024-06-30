@@ -34,9 +34,12 @@
 		theme: "md", // Automatic theme detection
 		navbar: {
 			mdCenterTitle: true,
-			
 		},
 		darkMode: false,
+
+		colors: {
+			primary: "#07ffac",
+		},
 
 		// App store
 		store: store,
