@@ -1,0 +1,18 @@
+{
+  "cwd": "C:\\Users\\aamut\\Desktop\\hajjApp_svelte",
+  "type": [
+    "pwa"
+  ],
+  "name": "Hajj App",
+  "framework": "svelte",
+  "template": "single-view",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkMode": true,
+    "iconFonts": true
+  },
+  "customBuild": false
+}
