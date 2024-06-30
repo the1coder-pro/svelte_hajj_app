@@ -1,4 +1,4 @@
-# Hajj App
+# Hajj App (Svelte)
 
 ## Framework7 CLI Options
 
