@@ -64,6 +64,10 @@
 			return ad.Image;
 		}
 	}
+
+	import { register } from "swiper/element/bundle";
+
+	register();
 </script>
 
 <Page name="home" pageContent={false}>
@@ -134,6 +138,23 @@
 		</Tab>
 
 		<Tab id="tab-2" class="page-content">
+			<swiper-container
+				pagination={true}
+				class="demo-swiper-multiple"
+				loop={true}
+				autoplay={true}
+				space-between={50}
+			>
+				{#each ads as ad}
+					<swiper-slide>
+						<img
+							src={getImageLink(ad)}
+							alt={ad.Title}
+							style="width: 100%; height: 200px;"
+						/>
+					</swiper-slide>
+				{/each}
+			</swiper-container>
 			<div class="demo-expandable-cards">
 				{#each ads as ad}
 					<Card expandable>
@@ -150,14 +171,18 @@
 								style="position: absolute; right: 15px; top: 15px"
 								iconF7="xmark_circle_fill"
 							/>
-							<CardHeader style={{ height: "60px" }}>{ad.Title}</CardHeader>
-							<div class="card-content-padding">
+							<CardHeader dir="rtl" style="height: 60px; padding-right: 40px;"
+								>{ad.Title}</CardHeader
+							>
+							<div class="card-content-padding" dir="rtl">
 								<p>
 									{ad.Description}
 								</p>
 
+								<Link iconMaterial="launch" href={ad.Link} external></Link>
+
 								<p>
-									<Button fill round large cardClose>Close</Button>
+									<Button fill round large cardClose>إغلاق الإعلان</Button>
 								</p>
 							</div>
 						</CardContent>

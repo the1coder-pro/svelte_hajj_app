@@ -8,12 +8,14 @@
 		Toggle,
 		BlockTitle,
 		Button,
-		Range,
+		Card,
 		NavRight,
 		Block,
 		NavTitle,
 		NavLeft,
 	} from "framework7-svelte";
+
+	import html2canvas from "html2canvas";
 
 	import data from "./data.json";
 	export let subTitle;
@@ -31,18 +33,34 @@
 
 	// share the question function with web api
 	function shareQuestion() {
-		if (navigator.share) {
-			navigator
-				.share({
+		var offScreen = document.querySelector(".off-screen");
+
+		html2canvas(offScreen, {
+			onclone: function (clone) {
+				clone.querySelector(".off-screen").style.display = "block";
+			},
+		}).then(function (canvas) {
+			// Do something with the canvas
+			canvas.toBlob(async (blob) => {
+				const files = [new File([blob], "image.png", { type: blob.type })];
+				const shareData = {
 					title: questions[0].Question,
 					text: questions[0].AnswerText,
-					url: window.location.href,
-				})
-				.then(() => console.log("Successful share"))
-				.catch((error) => console.log("Error sharing", error));
-		} else {
-			console.log("Web Share API not supported in your browser");
-		}
+					files,
+				};
+				if (navigator.canShare(shareData)) {
+					try {
+						await navigator.share(shareData);
+					} catch (err) {
+						if (err.name !== "AbortError") {
+							console.error(err.name, err.message);
+						}
+					}
+				} else {
+					console.warn("Sharing not supported", shareData);
+				}
+			});
+		});
 	}
 </script>
 
@@ -55,12 +73,59 @@
 		<NavTitle subtitle={mainTitle} style="font-size: 25px; padding: 20px;"
 			>{subTitle}</NavTitle
 		>
+
 		<NavRight>
 			<Button color="black" iconF7="arrow_right" back></Button>
 		</NavRight>
 	</Navbar>
 	<Block>
-		<h2 dir="rtl">{questions[0].Question}</h2>
-		<p dir="rtl" style="font-size: 20px;">{questions[0].AnswerText}</p>
+		<h2 dir="rtl" style="text-align: center;">{questions[0].Question}</h2>
+		<Card>
+			<p
+				dir="rtl"
+				style="font-size: 20px; padding: 15px; text-justify: inter-word; text-align: justify;"
+			>
+				{questions[0].AnswerText}
+			</p>
+		</Card>
 	</Block>
+	<div class="off-screen" style="display: none;">
+		<div
+			class="image-container"
+			style="  position: relative;
+  display: inline-block;"
+		>
+			<img
+				style="display: block;
+  width: 100%;
+  height: auto;"
+				alt="background"
+				src="../assets/1600w-F2CyNS5sQdM.webp"
+			/>
+			<div
+				style="position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background-color: #000000;
+  color: #fff;
+  padding: 10px 20px;"
+				class="overlay-text"
+			>
+				{questions[0].Question}
+			</div>
+			<div
+				style="position: absolute;
+  top: 62%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background-color: lightblue;
+  color: black;
+  padding: 10px 20px;"
+				class="overlay-text"
+			>
+				{questions[0].AnswerText}
+			</div>
+		</div>
+	</div>
 </Page>

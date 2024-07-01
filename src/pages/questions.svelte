@@ -50,12 +50,12 @@
 	<List strongIos outlineIos dividersIos class="searchbar-not-found">
 		<ListItem title="لا توجد أسئلة" />
 	</List>
-	<List strongIos outlineIos dividersIos class="search-list searchbar-found">
+	<List dir="rtl" dividersIos mediaList outlineIos strongIos>
 		{#each questions as question}
 			<ListItem
-				href="/teacher/{name}/{mainTitle}/{subTitle}/{question.Question}/"
+				link="/teacher/{name}/{mainTitle}/{subTitle}/{question.Question}/"
 				title={question.Question}
-				dir="rtl"
+				subtitle={mainTitle}
 			/>
 		{/each}
 	</List>
