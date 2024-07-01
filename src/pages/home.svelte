@@ -17,6 +17,9 @@
 		Fab,
 		Icon,
 		Popup,
+		Card,
+		CardContent,
+		CardHeader,
 	} from "framework7-svelte";
 
 	let teachers = [
@@ -30,6 +33,8 @@
 		"شيخ علي الدهنين",
 	];
 
+	import { onMount } from "svelte";
+
 	let popupOpened = false;
 
 	// get questions from data.json
@@ -38,6 +43,27 @@
 	data.forEach((question) => {
 		questions.push(question);
 	});
+
+	// load ads from the url https://opensheet.elk.sh/1IR-c-DM1_G0Qr6sr-iy7gZKwWN5zuQfo_Vr8Ky29BgE/1
+	let ads = [];
+	const url =
+		"https://opensheet.elk.sh/1IR-c-DM1_G0Qr6sr-iy7gZKwWN5zuQfo_Vr8Ky29BgE/1";
+
+	onMount(async () => {
+		const response = await fetch(url);
+		ads = await response.json();
+	});
+
+	function getImageLink(ad) {
+		// if the link is from google drive, get the image id and return the link
+
+		if (ad.Image.toString().includes("drive.google.com")) {
+			var id = ad.Image.toString().split("id=")[1];
+			return `https://lh3.googleusercontent.com/d/${id}=s1000?authuser=0`;
+		} else {
+			return ad.Image;
+		}
+	}
 </script>
 
 <Page name="home" pageContent={false}>
@@ -62,8 +88,11 @@
 							large
 							outline
 							style="font-size: 15px; text-align: center; color:
-							black;">{teacher}</Button
-						>
+							black;"
+							><h3>
+								{teacher}
+							</h3>
+						</Button>
 					{/each}
 				</p>
 			</Block>
@@ -78,7 +107,11 @@
 			>
 				<Page>
 					<Navbar title="البحث">
-						<Searchbar searchContainer=".search-list" searchIn=".item-title" />
+						<Searchbar
+							placeholder="البحث"
+							searchContainer=".search-list"
+							searchIn=".item-title"
+						/>
 						<NavRight>
 							<Button color="black" iconF7="arrow_right" popupClose></Button>
 						</NavRight>
@@ -101,51 +134,36 @@
 		</Tab>
 
 		<Tab id="tab-2" class="page-content">
-			<Block>
-				<p>Tab 2 content</p>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim
-					quia molestiae facilis laudantium voluptates obcaecati officia cum,
-					sit libero commodi. Ratione illo suscipit temporibus sequi iure ad
-					laboriosam accusamus?
-				</p>
-				<p>
-					Saepe explicabo voluptas ducimus provident, doloremque quo totam
-					molestias! Suscipit blanditiis eaque exercitationem praesentium
-					reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod,
-					qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.
-				</p>
-				<p>
-					Totam reprehenderit amet commodi ipsum nam provident doloremque
-					possimus odio itaque, est animi culpa modi consequatur reiciendis
-					corporis libero laudantium sed eveniet unde delectus a maiores nihil
-					dolores? Natus, perferendis.
-				</p>
-				<p>
-					Atque quis totam repellendus omnis alias magnam corrupti, possimus
-					aspernatur perspiciatis quae provident consequatur minima doloremque
-					blanditiis nihil maxime ducimus earum autem. Magni animi blanditiis
-					similique iusto, repellat sed quisquam!
-				</p>
-				<p>
-					Suscipit, facere quasi atque totam. Repudiandae facilis at optio
-					atque, rem nam, natus ratione cum enim voluptatem suscipit veniam!
-					Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid
-					impedit! Adipisci!
-				</p>
-				<p>
-					Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae
-					consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a
-					assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum
-					cumque impedit.
-				</p>
-				<p>
-					Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem,
-					natus ad praesentium rerum libero consectetur temporibus cupiditate
-					atque aspernatur, eaque provident eligendi quaerat ea soluta
-					doloremque. Iure fugit, minima facere.
-				</p>
-			</Block>
+			<div class="demo-expandable-cards">
+				{#each ads as ad}
+					<Card expandable>
+						<CardContent padding={false}>
+							<div
+								style="background: url({getImageLink(
+									ad,
+								)}) no-repeat center bottom; background-size: cover; height: 240px"
+							/>
+							<Link
+								cardClose
+								color="white"
+								class="card-opened-fade-in"
+								style="position: absolute; right: 15px; top: 15px"
+								iconF7="xmark_circle_fill"
+							/>
+							<CardHeader style={{ height: "60px" }}>{ad.Title}</CardHeader>
+							<div class="card-content-padding">
+								<p>
+									{ad.Description}
+								</p>
+
+								<p>
+									<Button fill round large cardClose>Close</Button>
+								</p>
+							</div>
+						</CardContent>
+					</Card>
+				{/each}
+			</div>
 		</Tab>
 	</Tabs>
 </Page>

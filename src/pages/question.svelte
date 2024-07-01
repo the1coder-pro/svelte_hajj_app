@@ -12,6 +12,7 @@
 		NavRight,
 		Block,
 		NavTitle,
+		NavLeft,
 	} from "framework7-svelte";
 
 	import data from "./data.json";
@@ -27,10 +28,30 @@
 		}
 	});
 	console.log(questions.length);
+
+	// share the question function with web api
+	function shareQuestion() {
+		if (navigator.share) {
+			navigator
+				.share({
+					title: questions[0].Question,
+					text: questions[0].AnswerText,
+					url: window.location.href,
+				})
+				.then(() => console.log("Successful share"))
+				.catch((error) => console.log("Error sharing", error));
+		} else {
+			console.log("Web Share API not supported in your browser");
+		}
+	}
 </script>
 
 <Page name="question">
 	<Navbar>
+		<NavLeft>
+			<Button color="black" iconMaterial="share" onClick={() => shareQuestion()}
+			></Button>
+		</NavLeft>
 		<NavTitle subtitle={mainTitle} style="font-size: 25px; padding: 20px;"
 			>{subTitle}</NavTitle
 		>

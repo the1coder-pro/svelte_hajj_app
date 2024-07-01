@@ -47,9 +47,12 @@
 					href="/teacher/{name}/{title}/"
 					large
 					outline
-					style="font-size: 15px; text-align: center; color:
-					black;">{title}</Button
-				>
+					style="font-size: 15px; padding: 60px; text-align: center; color:
+							black;"
+					><h3>
+						{title}
+					</h3>
+				</Button>
 			{/each}
 		</p>
 	</Block>

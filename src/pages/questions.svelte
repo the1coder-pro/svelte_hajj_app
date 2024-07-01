@@ -39,18 +39,23 @@
 			<Button color="black" iconF7="arrow_right" back></Button>
 		</NavRight>
 		<Subnavbar inner={false}>
-			<Searchbar searchContainer=".search-list" searchIn=".item-title" />
+			<Searchbar
+				placeholder="البحث"
+				searchContainer=".search-list"
+				searchIn=".item-title"
+			/>
 		</Subnavbar>
 	</Navbar>
 
 	<List strongIos outlineIos dividersIos class="searchbar-not-found">
-		<ListItem title="Nothing found" />
+		<ListItem title="لا توجد أسئلة" />
 	</List>
 	<List strongIos outlineIos dividersIos class="search-list searchbar-found">
 		{#each questions as question}
 			<ListItem
 				href="/teacher/{name}/{mainTitle}/{subTitle}/{question.Question}/"
 				title={question.Question}
+				dir="rtl"
 			/>
 		{/each}
 	</List>
