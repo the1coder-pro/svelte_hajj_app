@@ -14,6 +14,9 @@
 		NavTitle,
 		Subnavbar,
 		Searchbar,
+		Card,
+		CardFooter,
+		CardHeader,
 	} from "framework7-svelte";
 
 	import data from "./data.json";
@@ -50,13 +53,26 @@
 	<List strongIos outlineIos dividersIos class="searchbar-not-found">
 		<ListItem title="لا توجد أسئلة" />
 	</List>
-	<List dir="rtl" dividersIos mediaList outlineIos strongIos>
+	<List
+		dir="rtl"
+		dividersIos
+		mediaList
+		outlineIos
+		strongIos
+		class="search-list searchbar-found"
+	>
 		{#each questions as question}
 			<ListItem
 				link="/teacher/{name}/{mainTitle}/{subTitle}/{question.Question}/"
 				title={question.Question}
-				subtitle={mainTitle}
 			/>
 		{/each}
 	</List>
 </Page>
+
+<!-- <ListItem
+
+link="/teacher/{name}/{mainTitle}/{subTitle}/{question.Question}/"
+title={question.Question}
+subtitle={mainTitle}
+/> -->

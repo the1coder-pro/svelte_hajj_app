@@ -33,13 +33,16 @@
 
 	// share the question function with web api
 	function shareQuestion() {
-		var offScreen = document.querySelector(".off-screen");
+		var onScreen = document.querySelector(".on-screen");
 
-		html2canvas(offScreen, {
-			onclone: function (clone) {
-				clone.querySelector(".off-screen").style.display = "block";
-			},
-		}).then(function (canvas) {
+		html2canvas(
+			onScreen,
+			//  {
+			// 	// onclone: function (clone) {
+			// 	// 	clone.querySelector(".on-screen").style.display = "block";
+			// 	// },
+			// }
+		).then(function (canvas) {
 			// Do something with the canvas
 			canvas.toBlob(async (blob) => {
 				const files = [new File([blob], "image.png", { type: blob.type })];
@@ -78,7 +81,7 @@
 			<Button color="black" iconF7="arrow_right" back></Button>
 		</NavRight>
 	</Navbar>
-	<Block>
+	<Block class="on-screen" style="padding: 10px;">
 		<h2 dir="rtl" style="text-align: center;">{questions[0].Question}</h2>
 		<Card>
 			<p
